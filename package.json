@@ -1,0 +1,17 @@
+{
+  "name": "practicointegrador",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ebased": "^1.6.2",
+    "nbased": "^2.1.0",
+    "serverless-iam-roles-per-function": "^3.2.0",
+    "uuid": "^9.0.0"
+  }
+}

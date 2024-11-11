@@ -1,0 +1,34 @@
+createPurchase:
+  handler: src/purchase/handler/createPurchase.handler
+  name: ${file(resource/index.yml):purchase.createPurchase}
+  description: 'Create Purchase'
+  environment:
+    CREATED_PURCHASE_DB: ${file(resource/index.yml):purchase.dynamoTablePurchase}
+    CREATED_CLIENT_DB: ${file(resource/index.yml):client.dynamoTable}
+  iamRoleStatementsInherit: true
+  iamRoleStatementsName: ${file(resource/index.yml):purchase.createPurchase}
+  iamRoleStatements:
+
+    - Effect: "Allow"
+      Resource: "*"
+      Action:
+        - "sns:*"
+
+    - Effect: "Allow"
+      Action: "sqs:*"
+      Resource:   "*"
+      
+    - Effect: "Allow"
+      Resource: "*"
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+
+  events:
+    - http:
+        path: purchase
+        method: post

@@ -1,0 +1,20 @@
+Resources:
+  
+  createGiftsqs:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName:  ${file(resource/index.yml):gift.createGiftsqs}
+
+
+  createGiftsqsPolicy:
+    Type: AWS::SQS::QueuePolicy
+    Properties: 
+      PolicyDocument: 
+        Statement:
+          Effect: Allow
+          Principal: '*'
+          Action: 
+            - SQS:*
+          Resource: "*"
+      Queues: 
+        - {Ref: createGiftsqs}

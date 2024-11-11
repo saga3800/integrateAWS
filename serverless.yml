@@ -1,0 +1,45 @@
+
+service: greysonbacca-practicIntegrador
+
+plugins: 
+  - serverless-iam-roles-per-function
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  versionFunctions: false
+  runtime: nodejs12.x
+  region: us-east-1
+  stage: dev
+  tags:
+    project: nbased  
+  tracing:
+    lambda: true
+    apiGateway: true
+
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - xray:PutTraceSegments
+        - xray:PutTelemetryRecords
+      Resource: '*'
+  environment:
+    CONTEXT: EBASED_CLIENT
+    LOG_LEVEL: INFO
+
+
+
+functions:
+- ${file(src/client/client.yml)}
+- ${file(src/card/card.yml)}
+- ${file(src/gift/gift.yml)}
+- ${file(src/purchase/purchase.yml)}
+
+resources:
+  - ${file(resource/client/topic.yml)}
+  - ${file(resource/client/dynamo.yml)}  
+  - ${file(resource/card/queue.yml)}
+  - ${file(resource/gift/queue.yml)}
+  - ${file(resource/purchase/dynamoPurchase.yml)}

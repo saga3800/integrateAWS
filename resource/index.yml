@@ -1,0 +1,17 @@
+client:
+  createClientTopic: "${self:service}-createClientTopic"
+  createClient: "${self:service}-createClient"
+  dynamoTable: "${self:service}-createClientTable"
+  getClient: "${self:service}-getClient"
+  getClientById: "${self:service}-getClientById"
+  updateClient: "${self:service}-updateClient"
+  deleteClient: "${self:service}-deleteClient"
+card:
+   createCreditCardsqs: "${self:service}-createCreditCardsqs"
+   createCard: "${self:service}-createCreditCard"
+gift:
+   createGiftsqs: "${self:service}-createGiftsqs"
+   createGift: "${self:service}-createGift"
+purchase:
+   createPurchase: "${self:service}-createPurchase"
+   dynamoTablePurchase: "${self:service}-purchase"

@@ -1,0 +1,36 @@
+createGift:
+  handler: src/gift/handler/createGift.handler
+  name: ${file(resource/index.yml):gift.createGift}
+  description: 'Create Gift'
+  environment:
+    #CREATED_CLIENT_DB: ${file(resource/index.yml):client.dynamoTable}
+    CREATED_CLIENT_DB: ${file(resource/index.yml):client.dynamoTable}
+  iamRoleStatementsInherit: true
+  iamRoleStatementsName: ${file(resource/index.yml):gift.createGift}
+  iamRoleStatements:
+
+    - Effect: "Allow"
+      Resource: "*"
+      Action:
+        - "sns:*"
+
+    - Effect: "Allow"
+      Action: "sqs:*"
+      Resource:   "*"
+      
+    - Effect: "Allow"
+      Resource: "*"
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+
+  events:
+    - sqs:
+        arn:
+          Fn::GetAtt:
+            - createGiftsqs
+            - Arn

@@ -1,0 +1,22 @@
+Resources:
+  
+  createClientTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: ${file(resource/index.yml):client.createClientTopic}
+      
+  createClientSubscription:
+    Type: 'AWS::SNS::Subscription'
+    Properties:
+      TopicArn: {Ref: createClientTopic}
+      Endpoint: "arn:aws:sqs:us-east-1:450865910417:greysonbacca-practicIntegrador-createCreditCardsqs"
+      Protocol: 'sqs'
+      RawMessageDelivery: 'true'
+
+  createClientSubscription2:
+    Type: 'AWS::SNS::Subscription'
+    Properties:
+      TopicArn: {Ref: createClientTopic}
+      Endpoint: "arn:aws:sqs:us-east-1:450865910417:greysonbacca-practicIntegrador-createGiftsqs"
+      Protocol: 'sqs'
+      RawMessageDelivery: 'true'      

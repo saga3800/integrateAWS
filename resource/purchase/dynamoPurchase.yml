@@ -1,0 +1,19 @@
+Resources:
+   PurchaseDynamoDbTable:
+     Type: 'AWS::DynamoDB::Table'
+     DeletionPolicy: Retain
+     Properties:
+       AttributeDefinitions:
+         -
+           AttributeName: "dni"
+           AttributeType: "S"   
+       KeySchema:
+         -
+           AttributeName: "dni"
+           KeyType: "HASH"
+       ProvisionedThroughput:
+         ReadCapacityUnits: 1
+         WriteCapacityUnits: 1
+       StreamSpecification:
+         StreamViewType: "NEW_AND_OLD_IMAGES"
+       TableName: ${file(resource/index.yml):purchase.dynamoTablePurchase}  

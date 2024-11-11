@@ -1,0 +1,36 @@
+createCard:
+  handler: src/card/handler/createCard.handler
+  name: ${file(resource/index.yml):card.createCard}
+  description: 'Create Card'
+  environment:
+    #CREATED_CLIENT_DB: ${file(resource/index.yml):client.dynamoTable}
+    CREATED_CLIENT_DB: ${file(resource/index.yml):client.dynamoTable}
+  iamRoleStatementsInherit: true
+  iamRoleStatementsName: ${file(resource/index.yml):card.createCard}
+  iamRoleStatements:
+
+    - Effect: "Allow"
+      Resource: "*"
+      Action:
+        - "sns:*"
+
+    - Effect: "Allow"
+      Action: "sqs:*"
+      Resource:   "*"
+      
+    - Effect: "Allow"
+      Resource: "*"
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+
+  events:
+    - sqs:
+        arn:
+          Fn::GetAtt:
+            - createCreditCardsqs
+            - Arn
